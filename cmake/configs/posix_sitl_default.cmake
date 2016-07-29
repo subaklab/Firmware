@@ -10,6 +10,9 @@ set(config_module_list
 	drivers/vmount
 
 	platforms/common
+	platforms/posix/px4_layer
+	platforms/posix/px4_daemon
+	platforms/posix/work_queue
 	platforms/posix/drivers/accelsim
 	platforms/posix/drivers/adcsim
 	platforms/posix/drivers/airspeedsim
@@ -19,8 +22,6 @@ set(config_module_list
 	platforms/posix/drivers/ledsim
 	platforms/posix/drivers/rgbledsim
 	platforms/posix/drivers/tonealrmsim
-	platforms/posix/px4_layer
-	platforms/posix/work_queue
 
 	systemcmds/esc_calib
 	systemcmds/mixer
@@ -101,7 +102,7 @@ set(config_extra_builtin_cmds
 # for the config posix_sitl_efk2 and set again, explicitly, for posix_sitl_lpe,
 # which are based on posix_sitl_default.
 set(config_sitl_rcS_dir
-	posix-configs/SITL/init/lpe
+	rcS
 	CACHE INTERNAL "init script dir for sitl"
 	)
 

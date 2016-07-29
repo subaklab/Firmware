@@ -169,7 +169,7 @@ __END_DECLS
 #elif defined(__PX4_POSIX_BEBOP)
 #define PX4_ROOTFSDIR "/home/root"
 #else
-#define PX4_ROOTFSDIR "rootfs"
+#define PX4_ROOTFSDIR "."
 #endif
 
 #endif
