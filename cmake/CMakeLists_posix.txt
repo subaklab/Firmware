@@ -1,6 +1,7 @@
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
+set(ROOTFS_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/rootfs)
 
 set(PX4_BASH_PREFIX "px4-")
 
@@ -14,6 +15,9 @@ px4_posix_generate_alias(
 	MODULE_LIST ${module_libraries}
 	PREFIX ${PX4_BASH_PREFIX}
 )
+
+add_subdirectory(posix-configs/SITL/init)
+add_subdirectory(ROMFS/px4fmu_common/mixers)
 
 
 if ("${BOARD}" STREQUAL "eagle" OR ("${BOARD}" STREQUAL "excelsior"))
@@ -139,6 +143,9 @@ px4_posix_generate_symlinks(
 	TARGET px4
 )
 
+add_dependencies(px4 posix_init)
+add_dependencies(px4 mixer)
+
 add_custom_target(run_config
 	COMMAND Tools/sitl_run.sh
 	$<TARGET_FILE:px4>
@@ -214,36 +221,6 @@ add_custom_target(list_vmd_make_targets
 #=============================================================================
 # install
 #
-
-install(TARGETS px4 DESTINATION ${CMAKE_INSTALL_BINDIR})
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/ROMFS DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
-
-add_custom_command(TARGET px4
-	POST_BUILD
-	COMMAND mkdir -p ${CMAKE_BINARY_DIR}/rootfs/etc/
-	)
-
-add_custom_command(TARGET px4
-	POST_BUILD
-	COMMAND mkdir -p ${CMAKE_BINARY_DIR}/rootfs/etc/
-	)
-
-add_custom_command(TARGET px4
-	POST_BUILD
-	COMMAND cp -R ${PROJECT_SOURCE_DIR}/posix-configs/SITL/init ${CMAKE_BINARY_DIR}/rootfs/etc/
-)
-
-add_custom_command(TARGET px4
-	POST_BUILD
-	COMMAND cp -R ${PROJECT_SOURCE_DIR}/ROMFS/sitl/mixers ${CMAKE_BINARY_DIR}/rootfs/etc/
-)
-
-add_custom_command(TARGET px4
-	POST_BUILD
-	COMMAND cp -R ${PROJECT_SOURCE_DIR}/ROMFS/px4fmu_common/mixers ${CMAKE_BINARY_DIR}/rootfs/etc/
-)
-
-
 
 
 #=============================================================================
