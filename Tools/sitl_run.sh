@@ -26,15 +26,6 @@ working_dir=`pwd`
 sitl_bin=$build_path/src/firmware/posix/px4
 rootfs=$build_path/tmp/rootfs
 
-if [ "$chroot" == "1" ]
-then
-	chroot_enabled=-c
-	sudo_enabled=sudo
-else
-	chroot_enabled=""
-	sudo_enabled=""
-fi
-
 if [ "$model" == "" ] || [ "$model" == "none" ]
 then
 	echo "empty model, setting iris as default"
@@ -136,7 +127,7 @@ elif [ "$debugger" == "valgrind" ]
 then
 	valgrind $sitl_command
 else
-	$sitl_command
+	px4 etc/init/${rc_script}
 fi
 
 if [ "$program" == "jmavsim" ]
