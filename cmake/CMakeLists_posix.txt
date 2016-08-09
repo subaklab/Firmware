@@ -217,7 +217,6 @@ add_custom_target(list_vmd_make_targets
 
 install(TARGETS px4 DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/ROMFS DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/posix-configs/SITL/init DESTINATION ${CMAKE_BINARY_DIR}/rootfs/etc/init)
 
 add_custom_command(TARGET px4
 	POST_BUILD
