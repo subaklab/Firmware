@@ -64,7 +64,10 @@ int BlockLocalPositionEstimator::flowMeasure(Vector<float, n_y_flow> &y)
 		return -1;
 	}
 
-	float d = agl() * cosf(_sub_att.get().roll) * cosf(_sub_att.get().pitch);
+	matrix::Quaternion<float> q(&_sub_att.get().q[0]);
+	matrix::Euler<float> euler(q);
+
+	float d = agl() * cosf(euler(0)) * cosf(euler(1));
 
 	// optical flow in x, y axis
 	float flow_x_rad = _sub_flow.get().pixel_flow_x_integral;
@@ -97,8 +100,7 @@ int BlockLocalPositionEstimator::flowMeasure(Vector<float, n_y_flow> &y)
 		0);
 
 	// rotation of flow from body to nav frame
-	Matrix3f R_nb(_sub_att.get().R);
-	Vector3f delta_n = R_nb * delta_b;
+	Vector3f delta_n = _R_att * delta_b;
 
 	// imporant to timestamp flow even if distance is bad
 	_time_last_flow = _timeStamp;
@@ -127,7 +129,7 @@ void BlockLocalPositionEstimator::flowCorrect()
 
 	SquareMatrix<float, n_y_flow> R;
 	R.setZero();
-	float d = agl() * cosf(_sub_att.get().roll) * cosf(_sub_att.get().pitch);
+	float d = agl() * cosf(_eul.phi()) * cosf(_eul.theta());
 	float rot_rate_norm = sqrtf(_sub_att.get().rollspeed * _sub_att.get().rollspeed
 				    + _sub_att.get().pitchspeed * _sub_att.get().pitchspeed
 				    + _sub_att.get().yawspeed * _sub_att.get().yawspeed);
