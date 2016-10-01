@@ -156,8 +156,8 @@ static bool _extended_logging = false;
 static bool _gpstime_only = false;
 static int32_t _utc_offset = 0;
 
-#ifndef __PX4_POSIX_EAGLE
-#define MOUNTPOINT PX4_ROOTFSDIR"/fs/microsd"
+#if defined(__PX4_POSIX)
+#define MOUNTPOINT PX4_ROOTFSDIR
 #else
 #define MOUNTPOINT "/root"
 #endif
