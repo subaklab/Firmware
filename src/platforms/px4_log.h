@@ -40,8 +40,8 @@
 
 #include <systemlib/visibility.h>
 
-#define _PX4_LOG_LEVEL_ALWAYS		0
-#define _PX4_LOG_LEVEL_DEBUG		1
+#define _PX4_LOG_LEVEL_DEBUG		0
+#define _PX4_LOG_LEVEL_INFO		1
 #define _PX4_LOG_LEVEL_WARN		2
 #define _PX4_LOG_LEVEL_ERROR		3
 #define _PX4_LOG_LEVEL_PANIC		4
@@ -82,8 +82,7 @@ __END_DECLS
 /****************************************************************************
  * Messages that should never be filtered or compiled out
  ****************************************************************************/
-#define PX4_LOG(FMT, ...) 	qurt_log(_PX4_LOG_LEVEL_ALWAYS, __FILE__, __LINE__, FMT, ##__VA_ARGS__)
-#define PX4_INFO(FMT, ...) 	qurt_log(_PX4_LOG_LEVEL_ALWAYS, __FILE__, __LINE__, FMT, ##__VA_ARGS__)
+#define PX4_INFO(FMT, ...) 	qurt_log(_PX4_LOG_LEVEL_INFO, __FILE__, __LINE__, FMT, ##__VA_ARGS__)
 #define PX4_BACKTRACE()
 
 #if defined(TRACE_BUILD)
@@ -123,8 +122,8 @@ __END_DECLS
 #define PX4_DEBUG(FMT, ...) 	__px4_log_omit(_PX4_LOG_LEVEL_DEBUG, FMT, ##__VA_ARGS__)
 
 #endif
-#define PX4_LOG_NAMED(name, FMT, ...) 	qurt_log( _PX4_LOG_LEVEL_ALWAYS, __FILE__, __LINE__, "%s " FMT, name, ##__VA_ARGS__)
-#define PX4_LOG_NAMED_COND(name, cond, FMT, ...) if( cond ) qurt_log( _PX4_LOG_LEVEL_ALWAYS, __FILE__, __LINE__, "%s " FMT, name,  ##__VA_ARGS__)
+#define PX4_LOG_NAMED(name, FMT, ...) 	qurt_log( _PX4_LOG_LEVEL_INFO, __FILE__, __LINE__, "%s " FMT, name, ##__VA_ARGS__)
+#define PX4_LOG_NAMED_COND(name, cond, FMT, ...) if( cond ) qurt_log( _PX4_LOG_LEVEL_INFO, __FILE__, __LINE__, "%s " FMT, name,  ##__VA_ARGS__)
 
 #else
 
@@ -399,8 +398,7 @@ __END_DECLS
 /****************************************************************************
  * Messages that should never be filtered or compiled out
  ****************************************************************************/
-#define PX4_LOG(FMT, ...) 	__px4_log(_PX4_LOG_LEVEL_ALWAYS, FMT, ##__VA_ARGS__)
-#define PX4_INFO(FMT, ...) 	__px4_log_modulename(_PX4_LOG_LEVEL_ALWAYS, FMT, ##__VA_ARGS__)
+#define PX4_INFO(FMT, ...) 	__px4_log_modulename(_PX4_LOG_LEVEL_INFO, FMT, ##__VA_ARGS__)
 
 #if defined(TRACE_BUILD)
 /****************************************************************************
