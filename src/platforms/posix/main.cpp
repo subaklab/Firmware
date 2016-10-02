@@ -116,12 +116,6 @@ int main(int argc, char **argv)
 		is_client = true;
 	}
 
-	if (argc < 2) {
-		PX4_ERR("Not enough arguments.");
-		print_usage();
-		return -1;
-	}
-
 	if (is_client) {
 
 		if (!is_already_running()) {
