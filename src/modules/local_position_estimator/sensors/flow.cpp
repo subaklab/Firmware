@@ -43,7 +43,7 @@ void BlockLocalPositionEstimator::flowDeinit()
 int BlockLocalPositionEstimator::flowMeasure(Vector<float, n_y_flow> &y)
 {
 	// check for sane pitch/roll
-	if (_sub_att.get().roll > 0.5f || _sub_att.get().pitch > 0.5f) {
+	if (_eul(0) > 0.5f || _eul(1) > 0.5f) {
 		return -1;
 	}
 
@@ -128,7 +128,7 @@ void BlockLocalPositionEstimator::flowCorrect()
 
 	SquareMatrix<float, n_y_flow> R;
 	R.setZero();
-	float d = agl() * cosf(_eul.phi()) * cosf(_eul.theta());
+	float d = agl() * cosf(_eul(0)) * cosf(_eul(1));
 	float rot_rate_norm = sqrtf(_sub_att.get().rollspeed * _sub_att.get().rollspeed
 				    + _sub_att.get().pitchspeed * _sub_att.get().pitchspeed
 				    + _sub_att.get().yawspeed * _sub_att.get().yawspeed);
