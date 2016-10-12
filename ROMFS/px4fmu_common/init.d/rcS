@@ -175,6 +175,12 @@ then
 				set AUTOCNF yes
 			fi
 		fi
+
+		if ver hwcmp MARUF4
+		then
+			set USE_IO no
+		fi
+
 	else
 		set USE_IO no
 	fi

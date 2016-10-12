@@ -219,6 +219,19 @@ then
 	fi
 fi
 
+if ver hwcmp MARUF4
+then
+	# Onboard I2C
+	if mpu9250 -R 12 start
+	then
+	fi
+
+	# I2C bypass of mpu 
+	if lps25h start
+	then
+	fi
+fi
+
 if meas_airspeed start
 then
 else
